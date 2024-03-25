@@ -6,7 +6,7 @@ showMessage({
   icon:'danger',
   message,
   duration:2500,
-  position:'top'
+  position:'top',
 })
 }
 

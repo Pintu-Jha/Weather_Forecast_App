@@ -16,6 +16,7 @@ import {textScale} from '../../styles/responsiveStyles';
 import BottonComp from '../../component/BottonComp';
 import ImagePath from '../../Utills/ImagePath';
 import LoadingScreen from '../../component/Loader';
+import { showError } from '../../../HelperFunctions';
 
 const Home = () => {
   const [location, setLocation] = useState('bhilwara');
@@ -27,6 +28,10 @@ const Home = () => {
     handleweatherData();
   }, []);
   const handleweatherData = async () => {
+    if(location == ''){
+      showError('Please Enter location')
+      return;
+    }
     try {
       setLoading(true);
       const url = `${API_BASE_URL}weather?q=${location}&appid=${API_KEY}&units=metric`;
@@ -39,7 +44,7 @@ const Home = () => {
         `${API_BASE_URL}forecast?q=${location}&appid=${API_KEY}&units=metric`,
       );
       const forecastData = await forecastResponse.json();
-      console.log(forecastData);
+      // console.log(forecastData);
       const today = new Date().getDate();
       const forecastList = forecastData.list.filter(item => {
         const itemDate = new Date(item.dt * 1000).getDate();
@@ -48,7 +53,7 @@ const Home = () => {
       setLoading(false);
       setForecast(forecastList);
     } catch (error) {
-      Alert.alert('Error', 'Failed to fetch weather data. Please try again.');
+      showError('Failed to fetch weather data. Please try again.');
       console.error('Error fetching weather data:', error);
     }
   };
