@@ -17,24 +17,26 @@ import BottonComp from '../../component/BottonComp';
 import ImagePath from '../../Utills/ImagePath';
 import {showError} from '../../../HelperFunctions';
 import WapperContainer from '../../component/WapperContainer';
+import LoadingScreen from '../../component/Loader';
 
 const Home = () => {
   const [location, setLocation] = useState('bhilwara');
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [isLoadingBtn, setLoadingBtn] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [weatherIcon, setWeatherIcon] = useState(null);
 
   useEffect(() => {
     handleweatherData();
   }, []);
   const handleweatherData = async () => {
-    if (location == '') {
+    if (!location) {
       showError('Please Enter location');
       return;
     }
     try {
-      setLoadingBtn(true);
+      isLoading ? setLoading(true) : setLoadingBtn(true);
       const url = `${API_BASE_URL}weather?q=${location}&appid=${API_KEY}&units=metric`;
       const response = await fetch(url);
       const currentWeatherData = await response.json();
@@ -64,34 +66,28 @@ const Home = () => {
         const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
         setWeatherIcon(iconUrl);
       }
-      setLocation('')
       setForecast(nextTwoDaysForecast);
       setLoadingBtn(false);
+      setLoading(false);
+      console.log(isLoading);
     } catch (error) {
       showError('please enter valide input');
       setLoadingBtn(false);
     }
   };
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
   return (
     <WapperContainer>
       <Image
         source={ImagePath.BACKGROND_IMG}
         style={{
-          width:spacing.FULL_WIDTH,
-          height:spacing.FULL_HEIGHT
+          width: spacing.FULL_WIDTH,
+          height: spacing.FULL_HEIGHT,
         }}
       />
-      <TouchableOpacity
-        style={{
-          margin: spacing.PADDING_16,
-          backgroundColor: '#000',
-          position: 'absolute',
-          right: 10,
-        }}
-        onPress={handleweatherData}
-        activeOpacity={0.6}>
-        <Image source={ImagePath.IC_REFRESH} style={{tintColor: '#fff'}} />
-      </TouchableOpacity>
       <View style={styles.container}>
         <TextImputComp
           value={location}
