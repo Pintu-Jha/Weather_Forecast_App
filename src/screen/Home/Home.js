@@ -18,17 +18,30 @@ import ImagePath from '../../Utills/ImagePath';
 import {showError} from '../../../HelperFunctions';
 import WapperContainer from '../../component/WapperContainer';
 import LoadingScreen from '../../component/Loader';
+import NetInfo from '@react-native-community/netinfo';
 
 const Home = () => {
-  const [location, setLocation] = useState('bhilwara');
+  const [location, setLocation] = useState('Bhilwara');
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [isLoadingBtn, setLoadingBtn] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [weatherIcon, setWeatherIcon] = useState(null);
+  const [isNetwork, setIsNetwork] = useState(true);
 
   useEffect(() => {
-    handleweatherData();
+    if (isNetwork) {
+      handleweatherData();
+    } else {
+      setLoading(true)
+      showError('Please check Internet');
+    }
+  }, []);
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsNetwork(state.isConnected);
+    });
+    return () => unsubscribe;
   }, []);
   const handleweatherData = async () => {
     if (!location) {
@@ -61,21 +74,23 @@ const Home = () => {
           currentDay = date;
         }
       });
+
       if (currentWeatherData.weather.length > 0 && currentWeatherData) {
-        const iconCode = currentWeatherData.weather[0].icon;
-        const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+        const iconCode = currentWeatherData?.weather[0]?.icon;
+        console.log('currentWeather>>', iconCode);
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
         setWeatherIcon(iconUrl);
       }
       setForecast(nextTwoDaysForecast);
       setLoadingBtn(false);
       setLoading(false);
-      console.log(isLoading);
+      // console.log(isLoading);
     } catch (error) {
-      showError('please enter valide input');
+      console.log('please enter valide input', error);
       setLoadingBtn(false);
+      setLoading(false);
     }
   };
-
   if (isLoading) {
     return <LoadingScreen />;
   }
