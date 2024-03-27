@@ -8,4 +8,5 @@ export default {
     IC_HELP_CIRCLE:require('../Assest/Images/help.png'),
     IC_SEARCH:require('../Assest/Images/search.png'),
     IC_REFRESH:require('../Assest/Images/refresh.png'),
+    BACKGROND_IMG:require('../Assest/Images/backgroundIMG.jpg')
 }

@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Home from './screen/Home/Home'
 import FlashMessage from 'react-native-flash-message'
 import { textScale } from './styles/responsiveStyles'

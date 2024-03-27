@@ -22,13 +22,10 @@ export default BottonComp;
 
 const styles = StyleSheet.create({
   container: {
-    // height: spacing.HEIGHT_56,
     borderRadius: spacing.RADIUS_12,
     alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingVertical: spacing.PADDING_16,
-    backgroundColor:colors.blueColor,
+    backgroundColor:'#4B4B4C',
+    padding:spacing.PADDING_12,
     marginTop:spacing.MARGIN_10
   },
   textStyle: {

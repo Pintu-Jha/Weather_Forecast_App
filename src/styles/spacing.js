@@ -145,8 +145,10 @@ export const spacing = {
   WIDTH_88: scale(88),
   WIDTH_90: scale(90),
   WIDTH_105: scale(105),
+  WIDTH_110: scale(110),
   WIDTH_116: scale(116),
   WIDTH_124: scale(124),
+  WIDTH_134: scale(134),
   WIDTH_156: scale(156),
   WIDTH_160: scale(160),
   WIDTH_164: scale(164),
@@ -159,6 +161,7 @@ export const spacing = {
   WIDTH_296: scale(296),
   WIDTH_312: scale(312),
   WIDTH_328: scale(328),
+  WIDTH_332: scale(332),
   WIDTH_338: scale(338),
   WIDTH_344: scale(344),
 

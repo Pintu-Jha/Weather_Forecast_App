@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
         paddingHorizontal:spacing.PADDING_16,
         alignItems:"center",
         backgroundColor:"#8AC1F8",
-        marginBottom:spacing.MARGIN_16
+        marginBottom:spacing.MARGIN_16,
+        elevation:2,
     },
     textStyle:{
         fontSize:textScale(14),
